@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Module"""
-
+"""Defines duck typed function"""
 from typing import Union, Sequence, Any
 
 
