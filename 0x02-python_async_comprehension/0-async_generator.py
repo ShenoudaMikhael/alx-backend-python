@@ -2,9 +2,13 @@
 """Async Generator"""
 import random
 import typing
+import asyncio
 
 
-async def async_generator() -> typing.Any:
+async def async_generator() -> (
+    typing.AsyncGenerator[typing.Any, typing.Any, typing.Any]
+):
     """async_generator function"""
     for _ in range(10):
+        await asyncio.sleep(1)
         yield random.uniform(0, 10)
