@@ -6,7 +6,7 @@ import asyncio
 
 
 async def async_generator() -> (
-    typing.AsyncGenerator[typing.Any, typing.Any, typing.Any]
+    typing.AsyncGenerator[float, typing.Any, typing.Any]
 ):
     """async_generator function"""
     for _ in range(10):
