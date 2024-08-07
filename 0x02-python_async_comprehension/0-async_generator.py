@@ -7,6 +7,6 @@ import asyncio
 
 async def async_generator() -> typing.Generator[float, typing.Any, typing.Any]:
     """async_generator function"""
-    for _ in range(10):
+    for _ in range(0, 10):
         await asyncio.sleep(1)
         yield random.uniform(0, 10)
