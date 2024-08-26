@@ -26,7 +26,8 @@ class TestGithubOrgClient(unittest.TestCase):
         mocked_fn.return_value = MagicMock(return_value=response)
         ghdotorg_c = GithubOrgClient(org)
         self.assertEqual(ghdotorg_c.org(), response)
-        mocked_fn.assert_called_once_with("https://api.github.com/orgs/{}".format(org))
+        mocked_fn.assert_called_once_with(
+            "https://api.github.com/orgs/{}".format(org))
 
     def test_public_repos_url(self) -> None:
         """test_public_repos_url"""
@@ -107,7 +108,8 @@ class TestGithubOrgClient(unittest.TestCase):
     def test_has_license(self, repo: Dict, key: str, expected: bool) -> None:
         """test_has_license"""
 
-        self.assertEqual(GithubOrgClient("google").has_license(repo, key), expected)
+        self.assertEqual(
+            GithubOrgClient("google").has_license(repo, key), expected)
 
 
 @parameterized_class(
@@ -143,3 +145,17 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     def tearDownClass(cls) -> None:
         """Removes the class fixtures after running all tests."""
         cls.get_patcher.stop()
+
+    def test_public_repos(self) -> None:
+        """test_public_repos"""
+        self.assertEqual(
+            GithubOrgClient("google").public_repos(),
+            self.expected_repos,
+        )
+
+    def test_public_repos_with_license(self) -> None:
+        """test_public_repos_with_license"""
+        self.assertEqual(
+            GithubOrgClient("google").public_repos(license="apache-2.0"),
+            self.apache2_repos,
+        )
