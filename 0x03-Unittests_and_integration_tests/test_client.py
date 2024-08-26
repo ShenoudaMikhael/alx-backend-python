@@ -24,8 +24,7 @@ class TestGithubOrgClient(unittest.TestCase):
         mocked_fn.return_value = MagicMock(return_value=response)
         ghdotorg_c = GithubOrgClient(org)
         self.assertEqual(ghdotorg_c.org(), response)
-        mocked_fn.assert_called_once_with(
-            "https://api.github.com/orgs/{}".format(org))
+        mocked_fn.assert_called_once_with("https://api.github.com/orgs/{}".format(org))
 
     def test_public_repos_url(self) -> None:
         """test_public_repos_url"""
@@ -96,3 +95,15 @@ class TestGithubOrgClient(unittest.TestCase):
             )
             mock_public_repos_url.assert_called_once()
         mock_get_json.assert_called_once()
+
+    @parameterized.expand(
+        [
+            ({"license": {"key": "bsd-3-clause"}}, "bsd-3-clause", True),
+            ({"license": {"key": "bsl-1.0"}}, "bsd-3-clause", False),
+        ]
+    )
+    def test_has_license(self, repo: Dict, key: str, expected: bool) -> None:
+        """test_has_license"""
+
+        self.assertEqual(GithubOrgClient("google").has_license(
+            repo, key), expected)
